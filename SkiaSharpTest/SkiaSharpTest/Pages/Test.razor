@@ -1,0 +1,56 @@
+﻿@page "/"
+@using SkiaSharp
+@using SkiaSharp.Views.Blazor
+
+<PageTitle>Test</PageTitle>
+
+<div class="top-container">
+    <div class="canvas-container">
+        <SKCanvasView  OnPaintSurface="OnPaintSurface" />
+    </div>
+</div>
+
+<style>
+    .top-container {
+        flex: 1 1 auto;
+        width: 100%;
+        min-height: 100%;
+        border: 1px solid red;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .canvas-container {
+        flex: 1;
+        background-color: #90ee90;
+        width: 100%;
+        height: 100%;
+    }
+
+    .canvas-container canvas {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+@code {
+    private void OnPaintSurface(SKPaintSurfaceEventArgs e)
+    {
+        var canvas = e.Surface.Canvas;
+
+        canvas.Clear(SKColors.Blue);
+
+        using var paint = new SKPaint
+            {
+                Color = SKColors.Yellow,
+                IsAntialias = true
+            };
+
+        SKFont font = new SKFont(SKTypeface.Default, 32);
+
+        canvas.DrawText($"{e.RawInfo.Width} : {e.RawInfo.Height}", 20, 50, font, paint);
+    }
+}
